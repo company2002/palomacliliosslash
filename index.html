@@ -1,524 +1,861 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paloma Designer de Cílios</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#D4A373',   /* Tom Dourado/Bronze */
-                        secondary: '#FAEuE1', /* Bege Claro */
-                        accent: '#BC6C25',    /* Marrom Acentuado */
-                        dark: '#2C1810',      /* Marrom Escuro para texto */
-                        rose: '#FCE7F3',      /* Rosa Suave */
-                    },
-                    fontFamily: {
-                        serif: ['"Cormorant Garamond"', 'serif'],
-                        sans: ['"Lato"', 'sans-serif'],
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#D4A373" /* Tom Dourado/Bronze */,
+              secondary: "#FAEuE1" /* Bege Claro */,
+              accent: "#BC6C25" /* Marrom Acentuado */,
+              dark: "#2C1810" /* Marrom Escuro para texto */,
+              rose: "#FCE7F3" /* Rosa Suave */,
+            },
+            fontFamily: {
+              serif: ['"Cormorant Garamond"', "serif"],
+              sans: ['"Lato"', "sans-serif"],
+            },
+          },
+        },
+      };
     </script>
 
     <style>
-        /* Smooth Scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Custom Animations */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
 
-        .hero-overlay {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));
-        }
+      /* Custom Animations */
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
 
+      .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .hero-overlay {
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+      }
+
+      .hero-bg {
+        /* Background image is set in style attribute */
+      }
+
+      @media (min-width: 768px) {
         .hero-bg {
-            /* Background image is set in style attribute */
+          background-size: cover !important;
+        }
+      }
+
+      /* Glass effect for navbar */
+      .glass-nav {
+        background: rgba(255, 255, 255, 0.95);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Mobile fixes: garante que a imagem de capa cubra toda a área no celular e que o fundo seja branco */
+      @media (max-width: 700px) {
+        .hero-bg {
+          background-color: white !important;
+          background-size: cover !important;
+          background-position: center top !important;
+          opacity: 1 !important; /* evita que o branco fique acinzentado */
+        }
+        .hero-overlay {
+          background: linear-gradient(
+            rgba(0, 0, 0, 0.12),
+            rgba(0, 0, 0, 0.22)
+          ); /* overlay mais suave no mobile */
+        }
+        body {
+          background-color: white !important;
         }
 
-        @media (min-width: 768px) {
-            .hero-bg {
-                background-size: cover !important;
-            }
+        /* Debug temporário: contorno vermelho para destacar a área do hero no mobile */
+        #home {
+          outline: 4px solid rgba(255, 255, 255, 0.85);
         }
-
-        /* Glass effect for navbar */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-        }
-
-        /* Mobile fixes: garante que a imagem de capa cubra toda a área no celular e que o fundo seja branco */
-        @media (max-width: 700px) {
-            .hero-bg {
-                background-color: white !important;
-                background-size: cover !important;
-                background-position: center top !important;
-                opacity: 1 !important; /* evita que o branco fique acinzentado */
-            }
-            .hero-overlay {
-                background: linear-gradient(rgba(0,0,0,0.12), rgba(0,0,0,0.22)); /* overlay mais suave no mobile */
-            }
-            body {
-                background-color: white !important;
-            }
-
-            /* Debug temporário: contorno vermelho para destacar a área do hero no mobile */
-            #home {
-                outline: 4px solid rgba(255, 255, 255, 0.85);
-            }
-        }
+      }
     </style>
-</head>
-<body class="font-sans text-dark bg-secondary selection:bg-primary selection:text-white">
-
+  </head>
+  <body
+    class="font-sans text-dark bg-secondary selection:bg-primary selection:text-white"
+  >
     <!-- Navbar -->
-    <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="text-3xl font-serif font-bold text-accent tracking-wide">
-                Paloma<span class="text-primary">Cílios</span>
-            </a>
+    <header
+      class="fixed w-full top-0 z-50 glass-nav transition-all duration-300"
+      id="navbar"
+    >
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <!-- Logo -->
+        <a
+          href="#"
+          class="text-3xl font-serif font-bold text-accent tracking-wide"
+        >
+          Paloma<span class="text-primary">Cílios</span>
+        </a>
 
-            <!-- Desktop Menu -->
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#home" class="text-dark hover:text-primary transition font-medium">Início</a>
-                <a href="#sobre" class="text-dark hover:text-primary transition font-medium">Sobre</a>
-                <a href="#servicos" class="text-dark hover:text-primary transition font-medium">Serviços</a>
-                <a href="#galeria" class="text-dark hover:text-primary transition font-medium">Galeria</a>
-                <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition transform hover:scale-105 shadow-md">Agendar</a>
-            </nav>
+        <!-- Desktop Menu -->
+        <nav class="hidden md:flex space-x-8 items-center">
+          <a
+            href="#home"
+            class="text-dark hover:text-primary transition font-medium"
+            >Início</a
+          >
+          <a
+            href="#sobre"
+            class="text-dark hover:text-primary transition font-medium"
+            >Sobre</a
+          >
+          <a
+            href="#servicos"
+            class="text-dark hover:text-primary transition font-medium"
+            >Serviços</a
+          >
+          <a
+            href="#galeria"
+            class="text-dark hover:text-primary transition font-medium"
+            >Galeria</a
+          >
+          <a
+            href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário."
+            target="_blank"
+            rel="noopener"
+            class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition transform hover:scale-105 shadow-md"
+            >Agendar</a
+          >
+        </nav>
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-dark focus:outline-none" aria-label="Abrir menu">
-                <i data-lucide="menu" class="w-8 h-8"></i>
-            </button>
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden text-dark focus:outline-none"
+          aria-label="Abrir menu"
+        >
+          <i data-lucide="menu" class="w-8 h-8"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Dropdown -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white border-t border-white absolute w-full left-0 shadow-lg"
+      >
+        <div class="flex flex-col p-6 space-y-4 text-center">
+          <a
+            href="#home"
+            class="text-lg text-dark hover:text-primary"
+            onclick="toggleMenu()"
+            >Início</a
+          >
+          <a
+            href="#sobre"
+            class="text-lg text-dark hover:text-primary"
+            onclick="toggleMenu()"
+            >Sobre</a
+          >
+          <a
+            href="#servicos"
+            class="text-lg text-dark hover:text-primary"
+            onclick="toggleMenu()"
+            >Serviços</a
+          >
+          <a
+            href="#galeria"
+            class="text-lg text-dark hover:text-primary"
+            onclick="toggleMenu()"
+            >Galeria</a
+          >
+          <a
+            href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário."
+            target="_blank"
+            rel="noopener"
+            class="text-lg font-bold text-primary"
+            onclick="toggleMenu()"
+            >Agendar Agora</a
+          >
         </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-white absolute w-full left-0 shadow-lg">
-            <div class="flex flex-col p-6 space-y-4 text-center">
-                <a href="#home" class="text-lg text-dark hover:text-primary" onclick="toggleMenu()">Início</a>
-                <a href="#sobre" class="text-lg text-dark hover:text-primary" onclick="toggleMenu()">Sobre</a>
-                <a href="#servicos" class="text-lg text-dark hover:text-primary" onclick="toggleMenu()">Serviços</a>
-                <a href="#galeria" class="text-lg text-dark hover:text-primary" onclick="toggleMenu()">Galeria</a>
-                <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário." target="_blank" rel="noopener" class="text-lg font-bold text-primary" onclick="toggleMenu()">Agendar Agora</a>
-            </div>
-        </div>
+      </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="relative h-[70vh] md:h-screen flex items-center justify-center">
-        <!-- Background Image with Overlay -->
-        <div class="absolute inset-0 z-0">
-            <!-- Imagem de capa: Close em olho -->
-            <div class="w-full h-full hero-bg opacity-80" style="background-image: url('https://i.imgur.com/sNytL0n.jpeg'); background-size: contain; background-position: center; background-repeat: no-repeat; background-color: white;"></div>
-            <div class="hero-overlay absolute inset-0"></div>
-        </div>
+    <section
+      id="home"
+      class="relative h-[70vh] md:h-screen flex items-center justify-center"
+    >
+      <!-- Background Image with Overlay -->
+      <div class="absolute inset-0 z-0">
+        <!-- Imagem de capa: Close em olho -->
+        <div
+          class="w-full h-full hero-bg opacity-80"
+          style="
+            background-image: url('https://i.imgur.com/sNytL0n.jpeg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: white;
+          "
+        ></div>
+        <div class="hero-overlay absolute inset-0"></div>
+      </div>
 
-        <div class="container mx-auto px-6 relative z-10 text-center text-white fade-in-up">
-            <p class="text-lg md:text-xl font-light tracking-[0.2em] mb-4 uppercase"></p>
-            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
-                 <br/><span class="text-primary italic"></span>
-            </h1>
-            
-            <!-- botão movido para o rodapé da imagem de capa -->
-        </div>
+      <div
+        class="container mx-auto px-6 relative z-10 text-center text-white fade-in-up"
+      >
+        <p
+          class="text-lg md:text-xl font-light tracking-[0.2em] mb-4 uppercase"
+        ></p>
+        <h1
+          class="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight"
+        >
+          <br /><span class="text-primary italic"></span>
+        </h1>
 
-        <!-- Agendar: fixado no rodapé da imagem de capa -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 bottom-6 md:bottom-12 z-20 flex gap-4">
-            <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário." target="_blank" rel="noopener" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-full text-lg font-medium transition shadow-lg flex items-center justify-center gap-2">
-                <i data-lucide="calendar"></i> Agendar Horário
-            </a>
-            <a href="https://www.instagram.com/paloma_cilioslash?utm_source=ig_web_button_share_sheet&igsh=ODdmZWVhMTFiMw==" target="_blank" rel="noopener" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-full text-lg font-medium transition shadow-lg flex items-center justify-center gap-2">
-                <i data-lucide="instagram"></i> Instagram
-            </a>
-        </div>
+        <!-- botão movido para o rodapé da imagem de capa -->
+      </div>
+
+      <!-- Agendar: fixado no rodapé da imagem de capa -->
+      <div
+        class="absolute left-1/2 transform -translate-x-1/2 bottom-6 md:bottom-12 z-20 flex gap-4"
+      >
+        <a
+          href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário."
+          target="_blank"
+          rel="noopener"
+          class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-full text-lg font-medium transition shadow-lg flex items-center justify-center gap-2"
+        >
+          <i data-lucide="calendar"></i> Agendar Horário
+        </a>
+        <a
+          href="https://www.instagram.com/paloma_cilioslash?utm_source=ig_web_button_share_sheet&igsh=ODdmZWVhMTFiMw=="
+          target="_blank"
+          rel="noopener"
+          class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-full text-lg font-medium transition shadow-lg flex items-center justify-center gap-2"
+        >
+          <i data-lucide="instagram"></i> Instagram
+        </a>
+      </div>
     </section>
 
     <!-- Sobre Mim -->
     <section id="sobre" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="w-full md:w-1/2 relative fade-in-up">
-                    <div class="absolute top-4 -left-4 w-full h-full border-2 border-primary rounded-lg z-0 hidden md:block"></div>
-                    <!-- Imagem Sobre: Profissional -->
-                    <img src="https://i.imgur.com/CkOdEvw.jpeg" 
-                         onerror="this.src='https://placehold.co/800x600/D4A373/FFF?text=Sobre+a+Profissional'"
-                         alt="Lash Designer Aplicando" class="relative z-10 w-full h-[500px] object-cover rounded-lg shadow-xl bg-gray-100">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+          <div class="w-full md:w-1/2 relative fade-in-up">
+            <div
+              class="absolute top-4 -left-4 w-full h-full border-2 border-primary rounded-lg z-0 hidden md:block"
+            ></div>
+            <!-- Imagem Sobre: Profissional -->
+            <img
+              src="https://i.imgur.com/CkOdEvw.jpeg"
+              onerror="this.src='https://placehold.co/800x600/D4A373/FFF?text=Sobre+a+Profissional'"
+              alt="Lash Designer Aplicando"
+              class="relative z-10 w-full h-[500px] object-cover rounded-lg shadow-xl bg-gray-100"
+            />
+          </div>
+          <div class="w-full md:w-1/2 fade-in-up">
+            <h4 class="text-primary font-bold tracking-widest uppercase mb-2">
+              Sobre Mim
+            </h4>
+            <h2 class="text-4xl font-serif font-bold mb-6 text-dark">
+              Dedicada à arte de realçar olhares
+            </h2>
+            <p class="text-gray-600 mb-6 leading-relaxed">
+              Olá! Sou Paloma, Lash Designer certificada com mais de 5 anos de
+              experiência no mercado da beleza. Minha missão vai além de apenas
+              aplicar fios; eu estudo a simetria do seu rosto (visagismo) para
+              criar um design único que valorize seus traços naturais.
+            </p>
+            <p class="text-gray-600 mb-8 leading-relaxed">
+              Utilizo apenas materiais de alta qualidade, hipoalergênicos e
+              técnicas seguras que preservam a saúde dos seus cílios naturais.
+            </p>
+
+            <div class="grid grid-cols-2 gap-6 mb-8">
+              <div class="flex items-center gap-3">
+                <div class="bg-rose p-3 rounded-full text-primary">
+                  <i data-lucide="award"></i>
                 </div>
-                <div class="w-full md:w-1/2 fade-in-up">
-                    <h4 class="text-primary font-bold tracking-widest uppercase mb-2">Sobre Mim</h4>
-                    <h2 class="text-4xl font-serif font-bold mb-6 text-dark">Dedicada à arte de realçar olhares</h2>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Olá! Sou Paloma, Lash Designer certificada com mais de 5 anos de experiência no mercado da beleza. Minha missão vai além de apenas aplicar fios; eu estudo a simetria do seu rosto (visagismo) para criar um design único que valorize seus traços naturais.
-                    </p>
-                    <p class="text-gray-600 mb-8 leading-relaxed">
-                        Utilizo apenas materiais de alta qualidade, hipoalergênicos e técnicas seguras que preservam a saúde dos seus cílios naturais.
-                    </p>
-                    
-                    <div class="grid grid-cols-2 gap-6 mb-8">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-rose p-3 rounded-full text-primary">
-                                <i data-lucide="award"></i>
-                            </div>
-                            <span class="font-medium">Certificada</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="bg-rose p-3 rounded-full text-primary">
-                                <i data-lucide="heart"></i>
-                            </div>
-                            <span class="font-medium">Material Premium</span>
-                        </div>
-                    </div>
+                <span class="font-medium">Certificada</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="bg-rose p-3 rounded-full text-primary">
+                  <i data-lucide="heart"></i>
                 </div>
+                <span class="font-medium">Material Premium</span>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Serviços -->
     <section id="servicos" class="py-20 bg-secondary">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16 fade-in-up">
-                <h4 class="text-primary font-bold tracking-widest uppercase mb-2">Nossas Técnicas</h4>
-                <h2 class="text-4xl font-serif font-bold text-dark">Menu de Serviços</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="eye" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Fio a Fio Clássico</h3>
-                    <p class="text-gray-600 mb-4">A técnica mais natural. Um fio sintético é aplicado sobre um fio natural, proporcionando efeito de rímel impecável.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 150</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Fio a Fio." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="sparkles" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Volume Brasileiro</h3>
-                    <p class="text-gray-600 mb-4">O queridinho do momento. Fios em formato de Y que garantem preenchimento e textura, com boa retenção.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 190</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Brasileiro." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="crown" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
-                    <p class="text-gray-600 mb-4">Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos para um olhar denso, escuro e marcante.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 250</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="crown" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
-                    <p class="text-gray-600 mb-4">Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos para um olhar denso, escuro e marcante.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 250</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="crown" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
-                    <p class="text-gray-600 mb-4">Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos para um olhar denso, escuro e marcante.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 250</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="crown" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
-                    <p class="text-gray-600 mb-4">Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos para um olhar denso, escuro e marcante.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 250</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="crown" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
-                    <p class="text-gray-600 mb-4">Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos para um olhar denso, escuro e marcante.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 250</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary">
-                    <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary">
-                        <i data-lucide="crown" size="32"></i>
-                    </div>
-                    <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
-                    <p class="text-gray-600 mb-4">Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos para um olhar denso, escuro e marcante.</p>
-                    <div class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100">
-                        <span class="text-2xl font-bold text-accent">R$ 250</span>
-                        <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide">Agendar</a>
-                    </div>
-                </div>
-                
-                 <!-- Card 4 -->
-                 <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary lg:col-span-3 md:col-span-2">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div class="flex items-center gap-6">
-                            <div class="h-16 w-16 bg-rose rounded-full flex items-center justify-center text-primary shrink-0">
-                                <i data-lucide="repeat" size="32"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-serif font-bold mb-1">Manutenção</h3>
-                                <p class="text-gray-600">Recomendada entre 15 a 21 dias para manter seus cílios sempre perfeitos.</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-col md:flex-row items-center gap-4">
-                            <div class="flex items-center gap-2">
-                                <span class="text-xl font-bold text-gray-500">A partir de</span>
-                                <span class="text-3xl font-bold text-accent">R$ 90</span>
-                            </div>
-                            <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar uma Manutenção." target="_blank" rel="noopener" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide text-center">Agendar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16 fade-in-up">
+          <h4 class="text-primary font-bold tracking-widest uppercase mb-2">
+            Nossas Técnicas
+          </h4>
+          <h2 class="text-4xl font-serif font-bold text-dark">
+            Menu de Serviços
+          </h2>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Card 1 -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="eye" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">
+              Fio a Fio Clássico
+            </h3>
+            <p class="text-gray-600 mb-4">
+              A técnica mais natural. Um fio sintético é aplicado sobre um fio
+              natural, proporcionando efeito de rímel impecável.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 150</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Fio a Fio."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="sparkles" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">
+              Volume Brasileiro
+            </h3>
+            <p class="text-gray-600 mb-4">
+              O queridinho do momento. Fios em formato de Y que garantem
+              preenchimento e textura, com boa retenção.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 190</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Brasileiro."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="crown" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
+            <p class="text-gray-600 mb-4">
+              Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos
+              para um olhar denso, escuro e marcante.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 250</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="crown" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
+            <p class="text-gray-600 mb-4">
+              Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos
+              para um olhar denso, escuro e marcante.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 250</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="crown" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
+            <p class="text-gray-600 mb-4">
+              Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos
+              para um olhar denso, escuro e marcante.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 250</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="crown" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
+            <p class="text-gray-600 mb-4">
+              Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos
+              para um olhar denso, escuro e marcante.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 250</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="crown" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
+            <p class="text-gray-600 mb-4">
+              Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos
+              para um olhar denso, escuro e marcante.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 250</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary"
+          >
+            <div
+              class="h-16 w-16 bg-rose rounded-full flex items-center justify-center mb-6 text-primary"
+            >
+              <i data-lucide="crown" size="32"></i>
+            </div>
+            <h3 class="text-2xl font-serif font-bold mb-3">Volume Russo</h3>
+            <p class="text-gray-600 mb-4">
+              Para quem ama destaque. Fans artesanais de 3 a 7 fios ultrafinos
+              para um olhar denso, escuro e marcante.
+            </p>
+            <div
+              class="flex justify-between items-center mt-6 pt-6 border-t border-gray-100"
+            >
+              <span class="text-2xl font-bold text-accent">R$ 250</span>
+              <a
+                href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um Volume Russo."
+                target="_blank"
+                rel="noopener"
+                class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide"
+                >Agendar</a
+              >
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 fade-in-up border-b-4 border-primary lg:col-span-3 md:col-span-2"
+          >
+            <div
+              class="flex flex-col md:flex-row items-center justify-between gap-6"
+            >
+              <div class="flex items-center gap-6">
+                <div
+                  class="h-16 w-16 bg-rose rounded-full flex items-center justify-center text-primary shrink-0"
+                >
+                  <i data-lucide="repeat" size="32"></i>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-serif font-bold mb-1">Manutenção</h3>
+                  <p class="text-gray-600">
+                    Recomendada entre 15 a 21 dias para manter seus cílios
+                    sempre perfeitos.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col md:flex-row items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl font-bold text-gray-500"
+                    >A partir de</span
+                  >
+                  <span class="text-3xl font-bold text-accent">R$ 90</span>
+                </div>
+                <a
+                  href="https://wa.me/5521994374107?text=Olá, gostaria de agendar uma Manutenção."
+                  target="_blank"
+                  rel="noopener"
+                  class="bg-primary text-white px-6 py-2 rounded-full hover:bg-accent transition shadow-md font-bold text-sm uppercase tracking-wide text-center"
+                  >Agendar</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Galeria (Simulada) -->
     <section id="galeria" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 fade-in-up">
-                <h2 class="text-4xl font-serif font-bold text-dark mb-4">Paloma Oliveira</h2>
-                <p class="text-gray-600">Toque na imagem e descubra o tipo de cílios.</p>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100">
-                    <!-- Galeria 1: Close Cílios -->
-                    <img src="https://i.imgur.com/j8o8pMn.jpeg" 
-                         onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Volume+Russo'"
-                         class="object-cover w-full h-full transition duration-500 group-hover:scale-110" alt="Resultado Volume Russo">
-                    <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                        <span class="text-white font-serif text-xl">Volume Russo</span>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100">
-                     <!-- Galeria 2: Close Cílios -->
-                    <img src="https://i.imgur.com/o3RIxKM.jpeg" 
-                         onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Fio+a+Fio'"
-                         class="object-cover w-full h-full transition duration-500 group-hover:scale-110" alt="Resultado Fio a Fio">
-                    <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                        <span class="text-white font-serif text-xl">Fio a Fio</span>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100">
-                     <!-- Galeria 3: Close Cílios -->
-                    <img src="https://i.imgur.com/bLORhxu.jpeg" 
-                         onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Brasileiro'"
-                         class="object-cover w-full h-full transition duration-500 group-hover:scale-110" alt="Resultado Brasileiro">
-                    <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                        <span class="text-white font-serif text-xl">Brasileiro</span>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100">
-                     <!-- Galeria 4: Close Cílios -->
-                    <img src="https://i.imgur.com/P7e2Rdr.jpeg" 
-                         onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Mega+Volume'"
-                         class="object-cover w-full h-full transition duration-500 group-hover:scale-110" alt="Resultado Mega Volume">
-                    <div class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                        <span class="text-white font-serif text-xl">Mega Volume</span>
-                    </div>
-                </div>
-            </div>
-            
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-12 fade-in-up">
+          <h2 class="text-4xl font-serif font-bold text-dark mb-4">
+            Paloma Oliveira
+          </h2>
+          <p class="text-gray-600">
+            Toque na imagem e descubra o tipo de cílios.
+          </p>
         </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div
+            class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100"
+          >
+            <!-- Galeria 1: Close Cílios -->
+            <img
+              src="https://i.imgur.com/j8o8pMn.jpeg"
+              onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Volume+Russo'"
+              class="object-cover w-full h-full transition duration-500 group-hover:scale-110"
+              alt="Resultado Volume Russo"
+            />
+            <div
+              class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center"
+            >
+              <span class="text-white font-serif text-xl">Volume Russo</span>
+            </div>
+          </div>
+          <div
+            class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100"
+          >
+            <!-- Galeria 2: Close Cílios -->
+            <img
+              src="https://i.imgur.com/o3RIxKM.jpeg"
+              onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Fio+a+Fio'"
+              class="object-cover w-full h-full transition duration-500 group-hover:scale-110"
+              alt="Resultado Fio a Fio"
+            />
+            <div
+              class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center"
+            >
+              <span class="text-white font-serif text-xl">Fio a Fio</span>
+            </div>
+          </div>
+          <div
+            class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100"
+          >
+            <!-- Galeria 3: Close Cílios -->
+            <img
+              src="https://i.imgur.com/bLORhxu.jpeg"
+              onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Brasileiro'"
+              class="object-cover w-full h-full transition duration-500 group-hover:scale-110"
+              alt="Resultado Brasileiro"
+            />
+            <div
+              class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center"
+            >
+              <span class="text-white font-serif text-xl">Brasileiro</span>
+            </div>
+          </div>
+          <div
+            class="relative group overflow-hidden rounded-lg aspect-square fade-in-up bg-gray-100"
+          >
+            <!-- Galeria 4: Close Cílios -->
+            <img
+              src="https://i.imgur.com/P7e2Rdr.jpeg"
+              onerror="this.src='https://placehold.co/400x400/D4A373/FFF?text=Mega+Volume'"
+              class="object-cover w-full h-full transition duration-500 group-hover:scale-110"
+              alt="Resultado Mega Volume"
+            />
+            <div
+              class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center"
+            >
+              <span class="text-white font-serif text-xl">Mega Volume</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Depoimentos -->
     <section class="py-20 bg-primary/10">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-serif font-bold text-dark mb-12">O que dizem as clientes</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Depoimento 1 -->
-                <div class="bg-white p-6 rounded-xl shadow-sm fade-in-up">
-                    <div class="flex justify-center text-yellow-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"Simplesmente amei! A durabilidade é incrível e não incomoda nada. O estúdio é lindo e super aconchegante."</p>
-                    <h5 class="font-bold text-dark">- Mariana Costa</h5>
-                </div>
-                <!-- Depoimento 2 -->
-                <div class="bg-white p-6 rounded-xl shadow-sm fade-in-up">
-                    <div class="flex justify-center text-yellow-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"Já fiz cílios em vários lugares, mas nenhum se compara à qualidade daqui. O volume russo fica perfeito!"</p>
-                    <h5 class="font-bold text-dark">- Beatriz Silva</h5>
-                </div>
-                <!-- Depoimento 3 -->
-                <div class="bg-white p-6 rounded-xl shadow-sm fade-in-up">
-                    <div class="flex justify-center text-yellow-400 mb-4">
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                        <i data-lucide="star" class="fill-current w-4 h-4"></i>
-                    </div>
-                    <p class="text-gray-600 italic mb-4">"Profissional super atenciosa, explicou tudo sobre os cuidados. Me senti muito segura e o resultado ficou lindo."</p>
-                    <h5 class="font-bold text-dark">- Carla Nunes</h5>
-                </div>
+      <div class="container mx-auto px-6 text-center">
+        <h2 class="text-3xl font-serif font-bold text-dark mb-12">
+          O que dizem as clientes
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Depoimento 1 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm fade-in-up">
+            <div class="flex justify-center text-yellow-400 mb-4">
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
             </div>
+            <p class="text-gray-600 italic mb-4">
+              "Simplesmente amei! A durabilidade é incrível e não incomoda nada.
+              O estúdio é lindo e super aconchegante."
+            </p>
+            <h5 class="font-bold text-dark">- Mariana Costa</h5>
+          </div>
+          <!-- Depoimento 2 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm fade-in-up">
+            <div class="flex justify-center text-yellow-400 mb-4">
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            </div>
+            <p class="text-gray-600 italic mb-4">
+              "Já fiz cílios em vários lugares, mas nenhum se compara à
+              qualidade daqui. O volume russo fica perfeito!"
+            </p>
+            <h5 class="font-bold text-dark">- Beatriz Silva</h5>
+          </div>
+          <!-- Depoimento 3 -->
+          <div class="bg-white p-6 rounded-xl shadow-sm fade-in-up">
+            <div class="flex justify-center text-yellow-400 mb-4">
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+              <i data-lucide="star" class="fill-current w-4 h-4"></i>
+            </div>
+            <p class="text-gray-600 italic mb-4">
+              "Profissional super atenciosa, explicou tudo sobre os cuidados. Me
+              senti muito segura e o resultado ficou lindo."
+            </p>
+            <h5 class="font-bold text-dark">- Carla Nunes</h5>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Call to Action / Contato -->
-    <section id="contato" class="py-20 bg-dark text-white relative overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-12">
-                <div class="md:w-1/2 fade-in-up">
-                    <h2 class="text-4xl font-serif font-bold mb-6 text-primary">Vamos agendar seu horário?</h2>
-                    <p class="text-gray-300 mb-8 text-lg">
-                        Não perca tempo com rímel todos os dias. Acorde pronta e maravilhosa. Entre em contato pelo WhatsApp para verificar a disponibilidade.
-                    </p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-primary/20 p-3 rounded-full">
-                                <i data-lucide="map-pin" class="text-primary"></i>
-                            </div>
-                            <span>Rua Pirajibe, 100- Inhaúma - RJ</span>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="bg-primary/20 p-3 rounded-full">
-                                <i data-lucide="clock" class="text-primary"></i>
-                            </div>
-                            <span>Terça a Sábado: 09h às 19h</span>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            <div class="bg-primary/20 p-3 rounded-full">
-                                <i data-lucide="phone" class="text-primary"></i>
-                            </div>
-                            <span>(21) 97743-4614</span>
-                        </div>
-                    </div>
-                </div>
+    <section
+      id="contato"
+      class="py-20 bg-dark text-white relative overflow-hidden"
+    >
+      <div class="container mx-auto px-6 relative z-10">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center gap-12"
+        >
+          <div class="md:w-1/2 fade-in-up">
+            <h2 class="text-4xl font-serif font-bold mb-6 text-primary">
+              Vamos agendar seu horário?
+            </h2>
+            <p class="text-gray-300 mb-8 text-lg">
+              Não perca tempo com rímel todos os dias. Acorde pronta e
+              maravilhosa. Entre em contato pelo WhatsApp para verificar a
+              disponibilidade.
+            </p>
 
-                <div class="md:w-1/3 bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 w-full fade-in-up text-center">
-                    <h3 class="text-2xl font-serif mb-6">Agendamento Rápido</h3>
-                    <p class="text-sm text-gray-300 mb-6">Clique no botão abaixo para falar diretamente comigo no WhatsApp.</p>
-                    <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário." target="_blank" rel="noopener" class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full w-full flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg">
-                        <i data-lucide="message-circle"></i> Agendar via WhatsApp
-                    </a>
+            <div class="space-y-4">
+              <div class="flex items-center gap-4">
+                <div class="bg-primary/20 p-3 rounded-full">
+                  <i data-lucide="map-pin" class="text-primary"></i>
                 </div>
+                <span>Av general Cândido da Silva 29 Inhaúma - RJ</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="bg-primary/20 p-3 rounded-full">
+                  <i data-lucide="clock" class="text-primary"></i>
+                </div>
+                <span>Terça a Sábado: 09h às 19h</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="bg-primary/20 p-3 rounded-full">
+                  <i data-lucide="phone" class="text-primary"></i>
+                </div>
+                <span>(21) 99437-4107</span>
+              </div>
             </div>
+          </div>
+
+          <div
+            class="md:w-1/3 bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 w-full fade-in-up text-center"
+          >
+            <h3 class="text-2xl font-serif mb-6">Agendamento Rápido</h3>
+            <p class="text-sm text-gray-300 mb-6">
+              Clique no botão abaixo para falar diretamente comigo no WhatsApp.
+            </p>
+            <a
+              href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário."
+              target="_blank"
+              rel="noopener"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full w-full flex items-center justify-center gap-2 transition transform hover:scale-105 shadow-lg"
+            >
+              <i data-lucide="message-circle"></i> Agendar via WhatsApp
+            </a>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-black text-gray-400 py-8 border-t border-gray-800">
-        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-lg font-serif font-bold text-white">Paloma Oliveira<span class="text-primary">CíliosSlash</span></div>
-            <div class="text-sm">© 2024 Paloma Designer de Cílios. Todos os direitos reservados.</div>
-            <div class="flex gap-4">
-                <a href="https://www.instagram.com/paloma_cilioslash?utm_source=ig_web_button_share_sheet&igsh=ODdmZWVhMTFiMw==" class="hover:text-primary transition" aria-label="Instagram"><i data-lucide="instagram" size="20"></i></a>
-                
-            </div>
+      <div
+        class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4"
+      >
+        <div class="text-lg font-serif font-bold text-white">
+          Paloma Oliveira<span class="text-primary">CíliosSlash</span>
         </div>
+        <div class="text-sm">
+          © 2024 Paloma Designer de Cílios. Todos os direitos reservados.
+        </div>
+        <div class="flex gap-4">
+          <a
+            href="https://www.instagram.com/paloma_cilioslash?utm_source=ig_web_button_share_sheet&igsh=ODdmZWVhMTFiMw=="
+            class="hover:text-primary transition"
+            aria-label="Instagram"
+            ><i data-lucide="instagram" size="20"></i
+          ></a>
+        </div>
+      </div>
     </footer>
 
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário." target="_blank" rel="noopener" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all z-50 animate-bounce hover:animate-none flex items-center justify-center" aria-label="Falar no WhatsApp">
-        <i data-lucide="message-circle" class="w-8 h-8"></i>
+    <a
+      href="https://wa.me/5521994374107?text=Olá, gostaria de agendar um horário."
+      target="_blank"
+      rel="noopener"
+      class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition-all z-50 animate-bounce hover:animate-none flex items-center justify-center"
+      aria-label="Falar no WhatsApp"
+    >
+      <i data-lucide="message-circle" class="w-8 h-8"></i>
     </a>
 
     <!-- Scripts -->
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+      // Initialize Lucide Icons
+      lucide.createIcons();
 
-        // Mobile Menu Toggle
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
+      // Mobile Menu Toggle
+      function toggleMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
 
-        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMenu);
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", toggleMenu);
 
-        // Scroll Animation Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
+      // Scroll Animation Observer
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Only animate once
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in-up').forEach(el => {
-            observer.observe(el);
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target); // Only animate once
+          }
         });
+      }, observerOptions);
+
+      document.querySelectorAll(".fade-in-up").forEach((el) => {
+        observer.observe(el);
+      });
     </script>
-</body>
+  </body>
 </html>
